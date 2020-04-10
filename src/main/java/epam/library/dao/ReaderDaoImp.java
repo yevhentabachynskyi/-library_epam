@@ -75,7 +75,7 @@ public class ReaderDaoImp implements ReaderDao {
     }
 
     @Override
-    public Reader findReaderById(Long id) {
+    public Reader findReaderByName(String name) {
         return null;
     }
 

@@ -6,15 +6,15 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface ReaderDao {
-        boolean addReader(Reader reader) throws SQLException;
+    boolean addReader(Reader reader) throws SQLException;
 
-        boolean updateReader(Reader reader) throws SQLException;
+    boolean updateReader(Reader reader) throws SQLException;
 
-        Reader editReader(long id) throws SQLException;
+    Reader editReader(long id) throws SQLException;
 
-        boolean deleteReader(Reader reader) throws SQLException;
+    boolean deleteReader(Reader reader) throws SQLException;
 
-        Reader findReaderById(Long id);
+    Reader findReaderByName(String name);
 
-        List<Reader> listAllReaders();
+    List<Reader> listAllReaders();
 }

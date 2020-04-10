@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/"/*urlPatterns = {"/new", "/add" , "/list"}*/)
+@WebServlet("/")
 public class ReaderServlet extends HttpServlet {
     private ReaderDao readerDao = new ReaderDaoImp();
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
