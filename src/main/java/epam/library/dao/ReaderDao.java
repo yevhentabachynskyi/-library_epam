@@ -14,7 +14,7 @@ public interface ReaderDao {
 
     boolean deleteReader(Reader reader) throws SQLException;
 
-    Reader findReaderByName(String name);
+    Reader findReaderByName(String name) throws SQLException;
 
     List<Reader> listAllReaders();
 }

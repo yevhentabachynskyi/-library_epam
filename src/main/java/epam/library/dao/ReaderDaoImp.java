@@ -20,7 +20,7 @@ public class ReaderDaoImp implements ReaderDao {
         preparedStatement.setString(2, reader.getAddress());
         preparedStatement.setInt(3, reader.getPhone());
         boolean rowInserted = preparedStatement.executeUpdate() > 0;
-        System.out.println("add " + reader.getName());
+        //System.out.println("add " + reader.getName());
 
 
         return rowInserted;
@@ -75,8 +75,24 @@ public class ReaderDaoImp implements ReaderDao {
     }
 
     @Override
-    public Reader findReaderByName(String name) {
-        return null;
+    public Reader findReaderByName(String name) throws SQLException {
+        Reader reader = null;
+        String sql = "SELECT * FROM READER WHERE name = ?";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, name);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        if (resultSet.next()) {
+            int id = resultSet.getInt("ID");
+            String address = resultSet.getString("ADDRESS");
+            int phone = resultSet.getInt("PHONE");
+            reader = new Reader(id, name, address, phone);
+            System.out.println(reader.getName() + " " + reader.getAddress());
+        }
+
+        return reader;
     }
 
     @Override
@@ -95,7 +111,7 @@ public class ReaderDaoImp implements ReaderDao {
 
                 Reader reader = new Reader(id, name, address, phone);
                 listReader.add(reader);
-                System.out.println(name);
+               // System.out.println(name);
 
             }
         } catch (SQLException e) {

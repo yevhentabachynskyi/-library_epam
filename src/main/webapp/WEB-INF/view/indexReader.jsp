@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
 <head>
     <title>LIBRARY</title>
@@ -8,11 +8,24 @@
 <body>
 <h1>Readers Management</h1>
 <h2>
-    <a href="new">Add New Book</a>
+    <a href="/reader/new">Add New Reader</a>
     &nbsp;&nbsp;&nbsp;
-    <a href="list">List All Books</a>
+    <a href="/reader/list">List All Readers</a>
+    <br> <br>
 
+    <h2>Find reader</h2>
+    <form action="/reader/find" method="post">
+        <tr>
+            <td>
+                <input type="text" name="name" size="25"
+                       value="<c:out value='${reader.name}' />"
+                />
+                <input type="submit" value="Search"/>
+            </td>
+        </tr>
+    </form>
 </h2>
+
 </center>
 <div align="center">
     <table border="1" cellpadding="5">
@@ -30,9 +43,9 @@
                 <td><c:out value="${reader.address}" /></td>
                 <td><c:out value="${reader.phone}" /></td>
                 <td>
-                    <a href="edit?id=<c:out value='${reader.id}' />">Edit</a>
+                    <a href="/reader/edit?id=<c:out value='${reader.id}' />">Edit</a>
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="delete?id=<c:out value='${reader.id}' />">Delete</a>
+                    <a href="/reader/delete?id=<c:out value='${reader.id}' />">Delete</a>
                 </td>
             </tr>
         </c:forEach>

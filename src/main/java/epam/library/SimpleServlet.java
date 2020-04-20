@@ -11,7 +11,7 @@ import java.io.PrintWriter;
 public class SimpleServlet extends HttpServlet {
 
     private String message;
-    private static String index = "/WEB-INF/view/index.jsp";
+    private static String index = "/WEB-INF/view/indexReader.jsp";
 
     public void init() throws ServletException {
         message = "This is simple servlet message";

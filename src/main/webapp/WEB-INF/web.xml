@@ -6,42 +6,24 @@
 
     <display-name>Servlets Tutorial</display-name>
 
-<!--    <servlet>-->
-<!--        <servlet-name>SimpleServlet</servlet-name>-->
-<!--        <servlet-class>epam.library.SimpleServlet</servlet-class>-->
-<!--    </servlet>-->
-<!--    <servlet>-->
-<!--        <servlet-name>DatabaseDemo</servlet-name>-->
-<!--        <servlet-class>epam.library.DatabaseDemo</servlet-class>-->
-<!--    </servlet>-->
+<!--    <servlet>
+        <servlet-name>LibraryServlet</servlet-name>
+        <servlet-class>epam.library.controller.LibraryServlet</servlet-class>
+    </servlet>
 
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>SimpleServlet</servlet-name>-->
-<!--        <url-pattern>/SimpleServlet</url-pattern>-->
-<!--    </servlet-mapping>-->
+    <servlet-mapping>
+        <servlet-name>LibraryServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ReaderServlet</servlet-name>
+        <servlet-class>epam.library.controller.ReaderServlet</servlet-class>
+    </servlet>
 
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>DatabaseDemo</servlet-name>-->
-<!--        <url-pattern>/DatabaseDemo</url-pattern>-->
-<!--    </servlet-mapping>-->
-<!--    <servlet>-->
-<!--        <servlet-name>LibraryServlet</servlet-name>-->
-<!--        <servlet-class>epam.library.controller.LibraryServlet</servlet-class>-->
-<!--    </servlet>-->
-
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>LibraryServlet</servlet-name>-->
-<!--        <url-pattern>/</url-pattern>-->
-<!--    </servlet-mapping>-->
-<!--    <servlet>-->
-<!--        <servlet-name>ReaderServlet</servlet-name>-->
-<!--        <servlet-class>epam.library.controller.ReaderServlet</servlet-class>-->
-<!--    </servlet>-->
-
-<!--    <servlet-mapping>-->
-<!--        <servlet-name>ReaderServlet</servlet-name>-->
-<!--        <url-pattern>/new</url-pattern>-->
-<!--    </servlet-mapping>-->
+    <servlet-mapping>
+        <servlet-name>ReaderServlet</servlet-name>
+        <url-pattern>/reader</url-pattern>
+    </servlet-mapping>-->
 
 
 </web-app>

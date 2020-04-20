@@ -12,9 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/")
+@WebServlet(urlPatterns ={"/reader/*", "/reader/find/*", "/reader/edit/*", "/reader/add/*","/reader/update/*", "/reader/new/*", "/reader/delete/*", "/reader/list"})
 public class ReaderServlet extends HttpServlet {
     private ReaderDao readerDao = new ReaderDaoImp();
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -26,21 +27,26 @@ public class ReaderServlet extends HttpServlet {
             throws ServletException, IOException {
         String action = request.getServletPath();
 
+        response.setContentType("text/html");
+
         try {
             switch (action) {
-                case "/new":
+                case "/reader/new":
                     showNewForm(request, response);
                     break;
-                case "/add":
+                case "/reader/add":
                     addReader(request, response);
                     break;
-                case "/delete":
+                case "/reader/delete":
                     deleteReader(request, response);
                     break;
-                case "/edit":
+                case "/reader/edit":
                     showEditForm(request, response);
                     break;
-                case "/update":
+                case "/reader/find":
+                    findReader(request, response);
+                    break;
+                case "/reader/update":
                     updateReader(request, response);
                     break;
                 default:
@@ -56,16 +62,16 @@ public class ReaderServlet extends HttpServlet {
             throws SQLException, IOException, ServletException {
         List<Reader> listReader = readerDao.listAllReaders();
         request.setAttribute("listReader", listReader);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/index.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/indexReader.jsp");
         dispatcher.forward(request, response);
-        System.out.println("listReader");
+        //System.out.println("listReader");
     }
 
     private void showNewForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/reader.jsp");
         dispatcher.forward(request, response);
-        System.out.println("SHOW");
+        //System.out.println("SHOW");
     }
 
     private void showEditForm(HttpServletRequest request, HttpServletResponse response)
@@ -86,6 +92,19 @@ public class ReaderServlet extends HttpServlet {
         Reader newReader = new Reader(name, address, phone);
         readerDao.addReader(newReader);
         response.sendRedirect("list");
+    }
+
+    private void findReader(HttpServletRequest request, HttpServletResponse response)
+            throws SQLException, ServletException, IOException {
+        String name = request.getParameter("name");
+        Reader findReader = readerDao.findReaderByName(name);
+        List<Reader> listReader = new ArrayList<>();
+        listReader.add(findReader);
+        request.setAttribute("listReader", listReader);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/indexReader.jsp");
+        dispatcher.forward(request, response);
+        System.out.println(findReader);
+
     }
 
     private void updateReader(HttpServletRequest request, HttpServletResponse response)

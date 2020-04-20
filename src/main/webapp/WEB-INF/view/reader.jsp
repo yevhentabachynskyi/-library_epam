@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
 <head>
     <title>LIBRARY</title>
@@ -8,18 +8,18 @@
 <body>
 <h1>Reader Management</h1>
 <h2>
-    <a href="new">Add New reader</a>
+    <a href="/reader/new">Add New Reader</a>
     &nbsp;&nbsp;&nbsp;
-    <a href="list">List All reader</a>
+    <a href="/reader/list">List All Reader</a>
 
 </h2>
 </center>
 <div align="center">
     <c:if test="${reader != null}">
-    <form action="update" method="post">
+    <form action="/reader/update" method="post">
         </c:if>
         <c:if test="${reader == null}">
-        <form action="add" method="post">
+        <form action="/reader/add" method="post">
             </c:if>
             <table border="1" cellpadding="5">
                 <caption>
