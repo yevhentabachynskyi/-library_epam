@@ -7,7 +7,7 @@ public class Book {
     private String title;
     private String authorName;
     private Genre genre;
-    private Date publishDate;
+    private int publishYear;
     private int number;
 
     public long getId() {
@@ -42,12 +42,12 @@ public class Book {
         this.genre = genre;
     }
 
-    public Date getPublishDate() {
-        return publishDate;
+    public int getPublishYear() {
+        return publishYear;
     }
 
-    public void setPublishDate(Date publishDate) {
-        this.publishDate = publishDate;
+    public void setPublishYear(int publishYear) {
+        this.publishYear = publishYear;
     }
 
     public int getNumber() {

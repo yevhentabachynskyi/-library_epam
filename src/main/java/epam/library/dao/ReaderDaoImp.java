@@ -20,9 +20,6 @@ public class ReaderDaoImp implements ReaderDao {
         preparedStatement.setString(2, reader.getAddress());
         preparedStatement.setInt(3, reader.getPhone());
         boolean rowInserted = preparedStatement.executeUpdate() > 0;
-        //System.out.println("add " + reader.getName());
-
-
         return rowInserted;
 
     }
@@ -77,18 +74,19 @@ public class ReaderDaoImp implements ReaderDao {
     @Override
     public Reader findReaderByName(String name) throws SQLException {
         Reader reader = null;
-        String sql = "SELECT * FROM READER WHERE name = ?";
+        String sql = "SELECT * FROM READER WHERE name LIKE ?";
 
         PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, name);
+        statement.setString(1, "%" + name + "%");
 
         ResultSet resultSet = statement.executeQuery();
 
         if (resultSet.next()) {
             int id = resultSet.getInt("ID");
+            String nameReader = resultSet.getString("NAME");
             String address = resultSet.getString("ADDRESS");
             int phone = resultSet.getInt("PHONE");
-            reader = new Reader(id, name, address, phone);
+            reader = new Reader(id, nameReader, address, phone);
             System.out.println(reader.getName() + " " + reader.getAddress());
         }
 
@@ -104,7 +102,7 @@ public class ReaderDaoImp implements ReaderDao {
         try (Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(sql)) {
             while (resultSet.next()) {
-                int id = resultSet.getInt("ID");
+                long id = resultSet.getLong("ID");
                 String name = resultSet.getString("NAME");
                 String address = resultSet.getString("ADDRESS");
                 int phone = resultSet.getInt("PHONE");

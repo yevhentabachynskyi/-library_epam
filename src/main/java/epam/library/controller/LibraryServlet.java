@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet("/")
 public class LibraryServlet extends HttpServlet {
-    private static String index = "/WEB-INF/view/home.jsp";
+    private static String index = "/WEB-INF/view/libraryPage.jsp";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -36,16 +36,13 @@ public class LibraryServlet extends HttpServlet {
         PrintWriter writer = response.getWriter();
 
         try {
-                Connection conn = Database.getConnection();
-                request.getRequestDispatcher(index).forward(request, response);
+            Connection conn = Database.getConnection();
+            request.getRequestDispatcher(index).forward(request, response);
 
-        }
-
-        catch(Exception ex){
+        } catch (Exception ex) {
             writer.println("Connection failed...");
             writer.println(ex);
-        }
-        finally {
+        } finally {
             writer.close();
         }
     }
