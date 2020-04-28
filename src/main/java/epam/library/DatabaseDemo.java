@@ -15,7 +15,7 @@ public class DatabaseDemo extends HttpServlet {
     static final String DATABASE_URL = "jdbc:h2:~/library";
     static final String DATABASE_USER = "root";
     static final String DATABASE_PASSWORD = "root";
-    static final String GET_ALL_DEVELOPERS_RECORDS = "SELECT ID, NAME, NUMBER FROM BOOK";
+    static final String GET_ALL_DEVELOPERS_RECORDS = "SELECT ID, TITLE, NUMBER FROM BOOK";
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/html");

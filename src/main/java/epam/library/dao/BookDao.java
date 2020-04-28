@@ -1,12 +1,13 @@
 package epam.library.dao;
 
+import epam.library.model.Author;
 import epam.library.model.Book;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public interface BookDao {
-    boolean addBook(Book book) throws SQLException;
+    boolean addBook(Book book, Author author) throws SQLException;
 
     boolean updateBook(Book book) throws SQLException;
 

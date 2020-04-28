@@ -32,7 +32,7 @@ public class ReaderServlet extends HttpServlet {
         try {
             switch (action) {
                 case "/reader/new":
-                    showNewForm(request, response);
+                    showNewReaderForm(request, response);
                     break;
                 case "/reader/add":
                     addReader(request, response);
@@ -41,7 +41,7 @@ public class ReaderServlet extends HttpServlet {
                     deleteReader(request, response);
                     break;
                 case "/reader/edit":
-                    showEditForm(request, response);
+                    showEditReaderForm(request, response);
                     break;
                 case "/reader/find":
                     findReader(request, response);
@@ -67,14 +67,14 @@ public class ReaderServlet extends HttpServlet {
         //System.out.println("listReader");
     }
 
-    private void showNewForm(HttpServletRequest request, HttpServletResponse response)
+    private void showNewReaderForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/reader.jsp");
         dispatcher.forward(request, response);
         //System.out.println("SHOW");
     }
 
-    private void showEditForm(HttpServletRequest request, HttpServletResponse response)
+    private void showEditReaderForm(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, ServletException, IOException {
         long id = Long.parseLong(request.getParameter("id"));
         Reader edReader = readerDao.editReader(id);

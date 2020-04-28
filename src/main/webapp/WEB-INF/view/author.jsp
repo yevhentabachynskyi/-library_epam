@@ -37,7 +37,8 @@
                 <td><c:out value="${author.id}" /></td>
                 <td><c:out value="${author.name}" /></td>
                 <td>
-                    <a href="/book/list?id=<c:out value='${author.id}' />">All books</a>
+
+                    <a href="/book/listBook?name=<c:out value='${author.name}' />">All books</a>
 
                 </td>
             </tr>

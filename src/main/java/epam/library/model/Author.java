@@ -21,6 +21,10 @@ public class Author {
         this.name = name;
     }
 
+    public Author(String authorName) {
+        this.name = name;
+    }
+
     public List<Book> getBookList() {
         return bookList;
     }

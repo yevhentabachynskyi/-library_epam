@@ -12,6 +12,6 @@ public interface AuthorDao {
 
     List<Author> listAllAuthors();
 
-    List<Book> listAllBooksByAuthor();
+    List<Book> listAllBooksByAuthor(String name) throws SQLException;
 
 }

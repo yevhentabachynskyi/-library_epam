@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AuthorDaoImp implements AuthorDao{
+public class AuthorDaoImp implements AuthorDao {
     private Connection connection = Database.getConnection();
 
     @Override
@@ -17,7 +17,7 @@ public class AuthorDaoImp implements AuthorDao{
         String sql = "SELECT * FROM AUTHOR WHERE name like ?";
 
         PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1,  "%" + name + "%");
+        statement.setString(1, "%" + name + "%");
 
         ResultSet resultSet = statement.executeQuery();
 
@@ -54,7 +54,29 @@ public class AuthorDaoImp implements AuthorDao{
     }
 
     @Override
-    public List<Book> listAllBooksByAuthor() {
-        return null;
+    public List<Book> listAllBooksByAuthor(String name) throws SQLException {
+        List<Book> listBook = new ArrayList<>();
+
+        String sql = "SELECT * FROM BOOK WHERE NAME_AUTHOR = ?";
+
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, name);
+        ResultSet resultSet = statement.executeQuery();
+
+        while (resultSet.next()) {
+            long id = resultSet.getLong("ID");
+            String title = resultSet.getString("TITLE");
+            String author = resultSet.getString("NAME_AUTHOR");
+            String genre = resultSet.getString("GENRE");
+            int year = resultSet.getInt("PUBLISH_YEAR");
+            int num = resultSet.getInt("NUMBER");
+
+            Book book = new Book(id, title, author, genre, year, num);
+            listBook.add(book);
+            System.out.println(title + " - " + author);
+
+        }
+
+        return listBook;
     }
 }

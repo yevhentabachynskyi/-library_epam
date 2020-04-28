@@ -6,9 +6,30 @@ public class Book {
     private long id;
     private String title;
     private String authorName;
-    private Genre genre;
+    private String genre;
     private int publishYear;
     private int number;
+
+    public Book(long id, String title, String authorName, String genre, int publishYear, int number) {
+        this.id = id;
+        this.title = title;
+        this.authorName = authorName;
+        this.genre = genre;
+        this.publishYear = publishYear;
+        this.number = number;
+    }
+
+    public Book(String title, String authorName, String genre, int publishYear, int number) {
+        this.title = title;
+        this.authorName = authorName;
+        this.genre = genre;
+        this.publishYear = publishYear;
+        this.number = number;
+    }
+
+    public Book(long id) {
+        this.id = id;
+    }
 
     public long getId() {
         return id;
@@ -34,11 +55,11 @@ public class Book {
         this.authorName = authorName;
     }
 
-    public Genre getGenre() {
+    public String getGenre() {
         return genre;
     }
 
-    public void setGenre(Genre genre) {
+    public void setGenre(String genre) {
         this.genre = genre;
     }
 
