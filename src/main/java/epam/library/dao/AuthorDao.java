@@ -8,10 +8,10 @@ import java.util.List;
 
 public interface AuthorDao {
 
-    Author findAuthorByName(String name) throws SQLException;
+    Author findAuthorByName(String name);
 
     List<Author> listAllAuthors();
 
-    List<Book> listAllBooksByAuthor(String name) throws SQLException;
+    List<Book> listAllBooksByAuthor(String name);
 
 }

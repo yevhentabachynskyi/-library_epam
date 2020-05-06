@@ -2,6 +2,9 @@ package epam.library.controller;
 
 
 import epam.library.db.Database;
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,35 +22,17 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/")
 public class LibraryServlet extends HttpServlet {
     private static String index = "/WEB-INF/view/libraryPage.jsp";
+    final static Logger logger = LogManager.getLogger(LibraryServlet .class);
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
- /*       if (request.getParameter("reader") != null){
-            this.forwardTo("reader",request,response);
-        } else if (request.getParameter("book") != null){
-            this.forwardTo("book.jsp",request,response);
-        }*/
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html");
-        PrintWriter writer = response.getWriter();
-
         try {
-            Connection conn = Database.getConnection();
             request.getRequestDispatcher(index).forward(request, response);
-
-        } catch (Exception ex) {
-            writer.println("Connection failed...");
-            writer.println(ex);
-        } finally {
-            writer.close();
+        } catch (ServletException | IOException e) {
+            logger.warn(e.getMessage());
         }
+
     }
-  /*  public void forwardTo(String to, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(to);
-         dispatcher.forward(request,response);
-    }*/
+
 }

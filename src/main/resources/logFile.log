@@ -1,0 +1,59 @@
+2020-05-06 11:26:50 ERROR LibraryServlet:41 - MyServlet's doGet() called
+2020-05-06 11:26:50 ERROR LibraryServlet:41 - MyServlet's doGet() called
+2020-05-06 11:26:50 ERROR LibraryServlet:41 - MyServlet's doGet() called
+2020-05-06 11:26:51 ERROR LibraryServlet:41 - MyServlet's doGet() called
+2020-05-06 11:26:56 WARN  BookServlet:36 - MyBookServlet's doGet() called
+2020-05-06 11:26:57 ERROR LibraryServlet:41 - MyServlet's doGet() called
+2020-05-06 11:26:58 ERROR LibraryServlet:41 - MyServlet's doGet() called
+2020-05-06 11:26:59 ERROR LibraryServlet:41 - MyServlet's doGet() called
+2020-05-06 11:27:00 ERROR LibraryServlet:41 - MyServlet's doGet() called
+2020-05-06 11:27:01 WARN  BookServlet:36 - MyBookServlet's doGet() called
+2020-05-06 11:27:01 ERROR LibraryServlet:41 - MyServlet's doGet() called
+2020-05-06 11:27:07 ERROR LibraryServlet:41 - MyServlet's doGet() called
+2020-05-06 11:27:07 ERROR LibraryServlet:41 - MyServlet's doGet() called
+2020-05-06 11:36:55 ERROR LibraryServlet:41 - MyServlet's doGet() called
+2020-05-06 11:36:55 ERROR LibraryServlet:41 - MyServlet's doGet() called
+2020-05-06 11:36:55 ERROR LibraryServlet:41 - MyServlet's doGet() called
+2020-05-06 11:36:55 ERROR LibraryServlet:41 - MyServlet's doGet() called
+2020-05-06 11:37:00 WARN  BookServlet:36 - MyBookServlet's doGet() called
+2020-05-06 11:37:01 ERROR LibraryServlet:41 - MyServlet's doGet() called
+2020-05-06 11:37:15 ERROR LibraryServlet:41 - MyServlet's doGet() called
+2020-05-06 12:01:43 INFO  Database:23 - connection OK
+2020-05-06 12:01:44 ERROR LibraryServlet:41 - MyServlet's doGet() called
+2020-05-06 12:01:44 ERROR LibraryServlet:41 - MyServlet's doGet() called
+2020-05-06 12:01:45 ERROR LibraryServlet:41 - MyServlet's doGet() called
+2020-05-06 12:01:45 ERROR LibraryServlet:41 - MyServlet's doGet() called
+2020-05-06 12:03:46 WARN  BookServlet:36 - MyBookServlet's doGet() called
+2020-05-06 12:03:47 ERROR LibraryServlet:41 - MyServlet's doGet() called
+2020-05-06 12:03:55 ERROR LibraryServlet:41 - MyServlet's doGet() called
+2020-05-06 12:05:35 ERROR Database:25 - Connection fail Wrong user name or password [28000-200]
+2020-05-06 12:05:37 ERROR Database:25 - Connection fail Wrong user name or password [28000-200]
+2020-05-06 12:05:38 ERROR Database:25 - Connection fail Wrong user name or password [28000-200]
+2020-05-06 12:05:40 ERROR Database:25 - Connection fail Wrong user name or password [28000-200]
+2020-05-06 12:11:48 INFO  Database:23 - Connection to database OK
+2020-05-06 12:11:58 WARN  BookServlet:36 - MyBookServlet's doGet() called
+2020-05-06 13:57:37 INFO  Database:23 - Connection to database OK
+2020-05-06 14:00:29 INFO  Database:23 - Connection to database OK
+2020-05-06 14:04:45 INFO  Database:23 - Connection to database OK
+2020-05-06 14:04:45 WARN  BookServlet:36 - MyBookServlet's doGet() called
+2020-05-06 14:04:49 WARN  BookServlet:36 - MyBookServlet's doGet() called
+2020-05-06 14:06:30 INFO  Database:23 - Connection to database OK
+2020-05-06 14:07:10 WARN  BookServlet:36 - MyBookServlet's doGet() called
+2020-05-06 14:07:21 WARN  BookServlet:36 - MyBookServlet's doGet() called
+2020-05-06 14:07:34 WARN  BookServlet:36 - MyBookServlet's doGet() called
+2020-05-06 14:07:38 WARN  BookServlet:36 - MyBookServlet's doGet() called
+2020-05-06 14:12:50 INFO  Database:23 - Connection to database OK
+2020-05-06 14:15:30 INFO  Database:23 - Connection to database OK
+2020-05-06 14:17:17 INFO  Database:23 - Connection to database OK
+2020-05-06 14:18:58 INFO  Database:23 - Connection to database OK
+2020-05-06 14:21:39 INFO  Database:23 - Connection to database OK
+2020-05-06 14:53:25 INFO  Database:23 - Connection to database OK
+2020-05-06 15:09:07 INFO  Database:23 - Connection to database OK
+2020-05-06 20:16:22 INFO  Database:23 - Connection to database OK
+2020-05-06 20:16:57 INFO  ReaderServlet:102 - Add reader: hgjhgj
+2020-05-06 20:17:13 INFO  ReaderServlet:146 - Delete reader: null
+2020-05-06 20:40:19 INFO  Database:23 - Connection to database OK
+2020-05-06 20:41:18 INFO  ReaderServlet:102 - Add reader: Kos
+2020-05-06 20:41:30 INFO  ReaderServlet:134 - Update reader: Kos
+2020-05-06 20:41:39 INFO  GivingServlet:115 - Giving book: null
+2020-05-06 20:43:02 INFO  ReaderServlet:134 - Update reader: Kos Oleh

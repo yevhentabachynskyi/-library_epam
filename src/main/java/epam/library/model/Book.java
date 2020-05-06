@@ -1,6 +1,5 @@
 package epam.library.model;
 
-import java.util.Date;
 
 public class Book {
     private long id;

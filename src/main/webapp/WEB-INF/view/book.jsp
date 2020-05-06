@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
     <title>Books</title>
@@ -38,7 +38,7 @@
                 <tr>
                     <th>Title:</th>
                     <td>
-                        <input type="text" name="title" size="45"
+                        <input type="text" name="title" size="55"
                                value="<c:out value='${book.title}' />"
                         />
                     </td>
@@ -46,16 +46,26 @@
                 <tr>
                     <th>Author:</th>
                     <td>
-                        <input type="text" name="authorName" size="45"
+                        <input type="text" name="authorName" size="55"
                                value="<c:out value='${book.authorName}' />"
                         />
                     </td>
                 </tr>
                 <th>Genre:</th>
                 <td>
-                    <input type="text" name="genre" size="45"
-                           value="<c:out value='${book.genre}' />"
-                    />
+                    <%--                    <input type="text" name="genre" size="45"--%>
+                    <%--                           value="<c:out value='${book.genre}' />"--%>
+                    <%--                    />--%>
+                    <%--                <input type="checkbox" name="genre" value="${book.genre}">--%>
+                    <%--                <label>--%>
+                    <%--                    <input type="checkbox"/> ${book.genre}--%>
+                    <%--                </label>--%>
+                        <input type="checkbox" name="genre" value="NOVEL"/>NOVEL
+                        <input type="checkbox" name="genre" value="FANTASY"/>FANTASY
+                        <input type="checkbox" name="genre" value="HISTORY"/>HISTORY
+                        <input type="checkbox" name="genre" value="DRAMA"/>DRAMA
+                        <input type="checkbox" name="genre" value="LYRICS"/>LYRICS
+
                 </td>
                 </tr>
                 <tr>

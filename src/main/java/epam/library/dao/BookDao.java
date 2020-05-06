@@ -7,15 +7,15 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface BookDao {
-    boolean addBook(Book book, Author author) throws SQLException;
+    boolean addBook(Book book, Author author);
 
-    boolean updateBook(Book book) throws SQLException;
+    boolean updateBook(Book book);
 
-    Book editBook(long id) throws SQLException;
+    Book editBook(long id);
 
-    boolean deleteBook(Book book) throws SQLException;
+    boolean deleteBook(Book book);
 
-    Book findBookByName(String name) throws SQLException;
+    Book findBookByName(String name);
 
     List<Book> listAllBooks();
 }

@@ -2,6 +2,8 @@ package epam.library.dao;
 
 import epam.library.db.Database;
 import epam.library.model.Reader;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -9,85 +11,108 @@ import java.util.List;
 
 public class ReaderDaoImp implements ReaderDao {
     private Connection connection = Database.getConnection();
-
+    final static Logger logger = LogManager.getLogger(ReaderDaoImp.class);
 
     @Override
-    public boolean addReader(Reader reader) throws SQLException {
+    public boolean addReader(Reader reader) {
         String sql = "INSERT INTO READER (NAME, ADDRESS, PHONE) VALUES(?,?,?)";
+        boolean rowInserted = false;
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, reader.getName());
+            preparedStatement.setString(2, reader.getAddress());
+            preparedStatement.setInt(3, reader.getPhone());
+            rowInserted = preparedStatement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.error("Add Reader Dao Error " + e.getMessage());
+        }
 
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1, reader.getName());
-        preparedStatement.setString(2, reader.getAddress());
-        preparedStatement.setInt(3, reader.getPhone());
-        boolean rowInserted = preparedStatement.executeUpdate() > 0;
         return rowInserted;
 
     }
 
     @Override
-    public boolean updateReader(Reader reader) throws SQLException {
+    public boolean updateReader(Reader reader) {
         String sql = "UPDATE READER SET NAME = ?, ADDRESS = ?, PHONE = ? WHERE ID = ?";
-
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, reader.getName());
-        statement.setString(2, reader.getAddress());
-        statement.setInt(3, reader.getPhone());
-        statement.setLong(4, reader.getId());
-
-        boolean rowUpdated = statement.executeUpdate() > 0;
-        statement.close();
+        boolean rowUpdated = false;
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, reader.getName());
+            statement.setString(2, reader.getAddress());
+            statement.setInt(3, reader.getPhone());
+            statement.setLong(4, reader.getId());
+            rowUpdated = statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.error("Update Reader Dao Error " + e.getMessage());
+        }
 
         return rowUpdated;
     }
 
     @Override
-    public Reader editReader(long id) throws SQLException {
+    public Reader editReader(long id) {
         Reader reader = null;
         String sql = "SELECT * FROM reader WHERE id = ?";
 
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setLong(1, id);
-        ResultSet resultSet = statement.executeQuery();
-        while (resultSet.next()) {
-            String name = resultSet.getString("NAME");
-            String address = resultSet.getString("ADDRESS");
-            int phone = resultSet.getInt("PHONE");
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(sql);
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                String name = resultSet.getString("NAME");
+                String address = resultSet.getString("ADDRESS");
+                int phone = resultSet.getInt("PHONE");
 
-            reader = new Reader(id, name, address, phone);
+                reader = new Reader(id, name, address, phone);
+            }
+
+        } catch (SQLException e) {
+            logger.error("Edit Reader Dao Error " + e.getMessage());
         }
 
         return reader;
     }
 
     @Override
-    public boolean deleteReader(Reader reader) throws SQLException {
+    public boolean deleteReader(Reader reader) {
         String sql = "DELETE FROM READER where ID = ?";
-
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setLong(1, reader.getId());
-
-        boolean rowDeleted = statement.executeUpdate() > 0;
+        boolean rowDeleted = false;
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(sql);
+            statement.setLong(1, reader.getId());
+            rowDeleted = statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            logger.error("Delete Reader Dao Error " + e.getMessage());
+        }
 
         return rowDeleted;
     }
 
     @Override
-    public Reader findReaderByName(String name) throws SQLException {
+    public Reader findReaderByName(String name) {
         Reader reader = null;
         String sql = "SELECT * FROM READER WHERE name LIKE ?";
 
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, "%" + name + "%");
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(sql);
+            statement.setString(1, "%" + name + "%");
 
-        ResultSet resultSet = statement.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
 
-        if (resultSet.next()) {
-            int id = resultSet.getInt("ID");
-            String nameReader = resultSet.getString("NAME");
-            String address = resultSet.getString("ADDRESS");
-            int phone = resultSet.getInt("PHONE");
-            reader = new Reader(id, nameReader, address, phone);
-            System.out.println(reader.getName() + " " + reader.getAddress());
+            if (resultSet.next()) {
+                int id = resultSet.getInt("ID");
+                String nameReader = resultSet.getString("NAME");
+                String address = resultSet.getString("ADDRESS");
+                int phone = resultSet.getInt("PHONE");
+                reader = new Reader(id, nameReader, address, phone);
+            }
+        } catch (SQLException e) {
+            logger.error("Find Reader Dao Error " + e.getMessage());
         }
 
         return reader;
@@ -109,11 +134,9 @@ public class ReaderDaoImp implements ReaderDao {
 
                 Reader reader = new Reader(id, name, address, phone);
                 listReader.add(reader);
-               // System.out.println(name);
-
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.error("List All Reader Dao Error " + e.getMessage());
         }
 
 

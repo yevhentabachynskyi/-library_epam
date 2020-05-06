@@ -1,10 +1,14 @@
 package epam.library.model;
 
+import java.util.List;
+
 public class Reader {
     private long id;
     private String name;
     private String address;
     private int phone;
+    private List<Book> bookList;
+
 
     public Reader() {
     }
@@ -22,6 +26,14 @@ public class Reader {
         this.name = name;
         this.address = address;
         this.phone = phone;
+    }
+
+    public Reader(long id, String name, String address, int phone, List<Book> bookList) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.bookList = bookList;
     }
 
     public long getId() {
@@ -56,4 +68,11 @@ public class Reader {
         this.phone = phone;
     }
 
+    public List<Book> getBookList() {
+        return bookList;
+    }
+
+    public void setBookList(List<Book> bookList) {
+        this.bookList = bookList;
+    }
 }

@@ -29,7 +29,7 @@
 </center>
 <div align="center">
     <table border="1" cellpadding="5">
-        <caption><h2>List of Readers</h2></caption>
+        <caption><h2>List of Books</h2></caption>
         <tr>
             <th>ID</th>
             <th>Name</th>
@@ -46,6 +46,12 @@
                     <a href="/reader/edit?id=<c:out value='${reader.id}' />">Edit</a>
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     <a href="/reader/delete?id=<c:out value='${reader.id}' />">Delete</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="/reader/give?idReader=<c:out value='${reader.id}' />">Give Book</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="/reader/return?idReader=<c:out value='${reader.id}' />">Return Book</a>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="/reader/allListBook?idReader=<c:out value='${reader.id}' />">All books</a>
                 </td>
             </tr>
         </c:forEach>
