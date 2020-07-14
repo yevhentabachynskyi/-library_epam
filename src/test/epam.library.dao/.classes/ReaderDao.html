@@ -1,0 +1,67 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: ReaderDao</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">epam.library.dao</a> ]
+</div>
+
+<h1>Coverage Summary for Class: ReaderDao (epam.library.dao)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">ReaderDao</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package epam.library.dao;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import epam.library.model.Reader;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import java.sql.SQLException;
+<i>6</i>&nbsp;import java.util.List;
+<i>7</i>&nbsp;
+<i>8</i>&nbsp;public interface ReaderDao {
+<i>9</i>&nbsp;    boolean addReader(Reader reader);
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;    boolean updateReader(Reader reader);
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;    Reader editReader(long id);
+<i>14</i>&nbsp;
+<i>15</i>&nbsp;    boolean deleteReader(Reader reader);
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    Reader findReaderByName(String name);
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    List&lt;Reader&gt; listAllReaders();
+<i>20</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-15 14:13</div>
+</div>
+</body>
+</html>

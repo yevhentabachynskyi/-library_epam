@@ -48,6 +48,11 @@
             </tr>
         </c:forEach>
     </table>
+    <h2>${messageOver}</h2>
+    <h2>${messageAlready}</h2>
+    <form>
+        <input type="button" value="Go back!" onclick="history.go(-1)">
+    </form>
 </div>
 
 </body>

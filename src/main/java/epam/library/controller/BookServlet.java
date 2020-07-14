@@ -21,7 +21,7 @@ import java.util.List;
 @WebServlet(urlPatterns = {"/book/*", "/book/find/*", "/book/edit/*", "/book/add/*", "/book/update/*", "/book/new/*", "/book/delete/*", "/book/list"})
 public class BookServlet extends HttpServlet {
     private BookDao bookDao = new BookDaoImp();
-    final static Logger logger = LogManager.getLogger(BookServlet .class);
+    final static Logger logger = LogManager.getLogger(BookServlet.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         doGet(request, response);
@@ -39,7 +39,7 @@ public class BookServlet extends HttpServlet {
                 addBook(request, response);
                 break;
             case "/book/delete":
-                 deleteBook(request, response);
+                deleteBook(request, response);
                 break;
             case "/book/edit":
                 showEditBookForm(request, response);
@@ -57,7 +57,7 @@ public class BookServlet extends HttpServlet {
     }
 
 
-    private void listBook(HttpServletRequest request, HttpServletResponse response){
+    private void listBook(HttpServletRequest request, HttpServletResponse response) {
         List<Book> listBooks = bookDao.listAllBooks();
         request.setAttribute("listBooks", listBooks);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/indexBook.jsp");
@@ -90,7 +90,7 @@ public class BookServlet extends HttpServlet {
 
     }
 
-    private void addBook(HttpServletRequest request, HttpServletResponse response){
+    private void addBook(HttpServletRequest request, HttpServletResponse response) {
         String title = request.getParameter("title");
         String authorName = request.getParameter("authorName");
         String genre = request.getParameter("genre");
@@ -101,7 +101,6 @@ public class BookServlet extends HttpServlet {
         bookDao.addBook(book, author);
         try {
             response.sendRedirect("list");
-            logger.info("Add book: " + book.getTitle());
         } catch (IOException e) {
             logger.error("Add New Book Error " + e.getMessage());
         }
@@ -116,7 +115,6 @@ public class BookServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/indexBook.jsp");
         try {
             dispatcher.forward(request, response);
-            logger.info("Find book: " +  findBook.getTitle());
         } catch (IOException | ServletException e) {
             logger.error("Find Book Error " + e.getMessage());
         }
@@ -124,7 +122,7 @@ public class BookServlet extends HttpServlet {
 
     }
 
-    private void updateBook(HttpServletRequest request, HttpServletResponse response){
+    private void updateBook(HttpServletRequest request, HttpServletResponse response) {
         long id = Long.parseLong(request.getParameter("id"));
         String title = request.getParameter("title");
         String authorName = request.getParameter("authorName");
@@ -135,19 +133,17 @@ public class BookServlet extends HttpServlet {
         bookDao.updateBook(book);
         try {
             response.sendRedirect("list");
-            logger.info("Update book: " +  book.getTitle());
         } catch (IOException e) {
             logger.error("Update Book Error " + e.getMessage());
         }
     }
 
-    private void deleteBook(HttpServletRequest request, HttpServletResponse response){
+    private void deleteBook(HttpServletRequest request, HttpServletResponse response) {
         long id = Long.parseLong(request.getParameter("id"));
         Book book = new Book(id);
         bookDao.deleteBook(book);
         try {
             response.sendRedirect("list");
-            logger.info("Delete book: " +  book.getTitle());
         } catch (IOException e) {
             logger.error("Delete Book Error " + e.getMessage());
         }

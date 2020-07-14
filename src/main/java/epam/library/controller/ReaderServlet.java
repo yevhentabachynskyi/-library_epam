@@ -94,7 +94,7 @@ public class ReaderServlet extends HttpServlet {
     private void addReader(HttpServletRequest request, HttpServletResponse response) {
         String name = request.getParameter("name");
         String address = request.getParameter("address");
-        int phone = Integer.parseInt(request.getParameter("phone"));
+        String phone = request.getParameter("phone");
         Reader newReader = new Reader(name, address, phone);
         readerDao.addReader(newReader);
         try {
@@ -125,7 +125,7 @@ public class ReaderServlet extends HttpServlet {
         long id = Long.parseLong(request.getParameter("id"));
         String name = request.getParameter("name");
         String address = request.getParameter("address");
-        int phone = Integer.parseInt(request.getParameter("phone"));
+        String phone = request.getParameter("phone");
 
         Reader reader = new Reader(id, name, address, phone);
         readerDao.updateReader(reader);

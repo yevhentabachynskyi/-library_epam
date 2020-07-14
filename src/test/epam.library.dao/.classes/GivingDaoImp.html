@@ -1,0 +1,237 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: GivingDaoImp</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">epam.library.dao</a> ]
+</div>
+
+<h1>Coverage Summary for Class: GivingDaoImp (epam.library.dao)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GivingDaoImp</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/ 99)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package epam.library.dao;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import epam.library.db.Database;
+<i>4</i>&nbsp;import epam.library.model.Book;
+<i>5</i>&nbsp;import epam.library.model.Giving;
+<i>6</i>&nbsp;import org.apache.log4j.LogManager;
+<i>7</i>&nbsp;import org.apache.log4j.Logger;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;import java.sql.*;
+<i>10</i>&nbsp;import java.util.HashMap;;
+<i>11</i>&nbsp;import java.util.Map;
+<i>12</i>&nbsp;
+<i>13</i>&nbsp;
+<b class="nc"><i>14</i>&nbsp;public class GivingDaoImp implements GivingDao {</b>
+<b class="nc"><i>15</i>&nbsp;    private Connection connection = Database.getConnection();</b>
+<b class="nc"><i>16</i>&nbsp;    final static Logger logger = LogManager.getLogger(GivingDaoImp.class);</b>
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;    @Override
+<i>19</i>&nbsp;    public boolean giveBook(Giving giving) {
+<b class="nc"><i>20</i>&nbsp;        boolean rowInserted = false;</b>
+<b class="nc"><i>21</i>&nbsp;        Book book = null;</b>
+<b class="nc"><i>22</i>&nbsp;        String sqlBook = &quot;SELECT * FROM BOOK WHERE BOOK.ID = ?&quot;;</b>
+<i>23</i>&nbsp;
+<b class="nc"><i>24</i>&nbsp;        PreparedStatement statement = null;</b>
+<i>25</i>&nbsp;        try {
+<b class="nc"><i>26</i>&nbsp;            statement = connection.prepareStatement(sqlBook);</b>
+<b class="nc"><i>27</i>&nbsp;            statement.setLong(1, giving.getIdBook());</b>
+<b class="nc"><i>28</i>&nbsp;            ResultSet resultSet = statement.executeQuery();</b>
+<b class="nc"><i>29</i>&nbsp;            if (resultSet.next()) {</b>
+<b class="nc"><i>30</i>&nbsp;                String name = resultSet.getString(&quot;TITLE&quot;);</b>
+<b class="nc"><i>31</i>&nbsp;                String author = resultSet.getString(&quot;NAME_AUTHOR&quot;);</b>
+<b class="nc"><i>32</i>&nbsp;                String genre = resultSet.getString(&quot;GENRE&quot;);</b>
+<b class="nc"><i>33</i>&nbsp;                int year = resultSet.getInt(&quot;PUBLISH_YEAR&quot;);</b>
+<b class="nc"><i>34</i>&nbsp;                int num = resultSet.getInt(&quot;NUMBER&quot;);</b>
+<b class="nc"><i>35</i>&nbsp;                book = new Book(giving.getIdBook(), name, author, genre, year, num);</b>
+<i>36</i>&nbsp;            }
+<b class="nc"><i>37</i>&nbsp;        } catch (SQLException e) {</b>
+<b class="nc"><i>38</i>&nbsp;        }</b>
+<b class="nc"><i>39</i>&nbsp;        System.out.println(book.getTitle()+&quot;****&quot;+book.getNumber());</b>
+<b class="nc"><i>40</i>&nbsp;        if (book.getNumber()&lt;1){</b>
+<i>41</i>&nbsp;
+<b class="nc"><i>42</i>&nbsp;            return rowInserted;</b>
+<i>43</i>&nbsp;        } else {
+<i>44</i>&nbsp;
+<b class="nc"><i>45</i>&nbsp;            String sql = &quot;INSERT INTO GIVING (ID_BOOK, ID_READER, DATE_GIVE) VALUES(?,?,?);&quot; +</b>
+<b class="nc"><i>46</i>&nbsp;                    &quot;UPDATE BOOK SET NUMBER = NUMBER-1 where ID = &quot; + giving.getIdBook();</b>
+<i>47</i>&nbsp;
+<b class="nc"><i>48</i>&nbsp;            PreparedStatement preparedStatement = null;</b>
+<i>49</i>&nbsp;            try {
+<b class="nc"><i>50</i>&nbsp;                preparedStatement = connection.prepareStatement(sql);</b>
+<b class="nc"><i>51</i>&nbsp;                preparedStatement.setLong(1, giving.getIdBook());</b>
+<b class="nc"><i>52</i>&nbsp;                preparedStatement.setLong(2, giving.getIdReader());</b>
+<b class="nc"><i>53</i>&nbsp;                preparedStatement.setDate(3, new Date(System.currentTimeMillis()));</b>
+<i>54</i>&nbsp;
+<b class="nc"><i>55</i>&nbsp;                rowInserted = preparedStatement.executeUpdate() &gt; 0;</b>
+<b class="nc"><i>56</i>&nbsp;            } catch (SQLException e) {</b>
+<b class="nc"><i>57</i>&nbsp;                logger.error(&quot;Give Book Error &quot; + e.getMessage());</b>
+<b class="nc"><i>58</i>&nbsp;            }</b>
+<b class="nc"><i>59</i>&nbsp;            return rowInserted;</b>
+<i>60</i>&nbsp;        }
+<i>61</i>&nbsp;    }
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;    @Override
+<i>64</i>&nbsp;    public boolean returnBook(Long idBook) {
+<b class="nc"><i>65</i>&nbsp;        String sql = &quot;UPDATE GIVING SET DATE_RETURN = ? WHERE ID_BOOK = &quot; + idBook + &quot;;&quot; +</b>
+<i>66</i>&nbsp;                &quot;UPDATE BOOK SET NUMBER = NUMBER+1 where ID = &quot; + idBook;
+<i>67</i>&nbsp;
+<b class="nc"><i>68</i>&nbsp;        PreparedStatement preparedStatement = null;</b>
+<b class="nc"><i>69</i>&nbsp;        boolean rowInserted = false;</b>
+<i>70</i>&nbsp;        try {
+<b class="nc"><i>71</i>&nbsp;            preparedStatement = connection.prepareStatement(sql);</b>
+<b class="nc"><i>72</i>&nbsp;            preparedStatement.setDate(1, new Date(System.currentTimeMillis()));</b>
+<i>73</i>&nbsp;
+<b class="nc"><i>74</i>&nbsp;            rowInserted = preparedStatement.executeUpdate() &gt; 0;</b>
+<b class="nc"><i>75</i>&nbsp;        } catch (SQLException e) {</b>
+<b class="nc"><i>76</i>&nbsp;            logger.error(&quot;Return Book Error &quot; + e.getMessage());</b>
+<b class="nc"><i>77</i>&nbsp;        }</b>
+<i>78</i>&nbsp;
+<b class="nc"><i>79</i>&nbsp;        return rowInserted;</b>
+<i>80</i>&nbsp;    }
+<i>81</i>&nbsp;
+<i>82</i>&nbsp;    @Override
+<i>83</i>&nbsp;    public Map&lt;Long, Map&lt;Giving, Book&gt;&gt; returnList(long idReader){
+<b class="nc"><i>84</i>&nbsp;        Map&lt;Long, Map&lt;Giving, Book&gt;&gt; giveMap = new HashMap&lt;&gt;();</b>
+<b class="nc"><i>85</i>&nbsp;        HashMap&lt;Giving, Book&gt; giveBooks = new HashMap&lt;&gt;();</b>
+<b class="nc"><i>86</i>&nbsp;        Giving giving = null;</b>
+<b class="nc"><i>87</i>&nbsp;        Book book = null;</b>
+<b class="nc"><i>88</i>&nbsp;        String sqlBook = &quot;SELECT * FROM BOOK A JOIN GIVING B on A.ID = B.ID_BOOK WHERE ID_READER = ? AND DATE_RETURN IS NULL; &quot;;</b>
+<i>89</i>&nbsp;
+<b class="nc"><i>90</i>&nbsp;        PreparedStatement statementReader = null;</b>
+<i>91</i>&nbsp;        try {
+<b class="nc"><i>92</i>&nbsp;            statementReader = connection.prepareStatement(sqlBook);</b>
+<b class="nc"><i>93</i>&nbsp;            statementReader.setLong(1, idReader);</b>
+<b class="nc"><i>94</i>&nbsp;            ResultSet resultSet = statementReader.executeQuery();</b>
+<b class="nc"><i>95</i>&nbsp;            while (resultSet.next()) {</b>
+<b class="nc"><i>96</i>&nbsp;                long id = resultSet.getLong(&quot;ID&quot;);</b>
+<b class="nc"><i>97</i>&nbsp;                String title = resultSet.getString(&quot;TITLE&quot;);</b>
+<b class="nc"><i>98</i>&nbsp;                String author = resultSet.getString(&quot;NAME_AUTHOR&quot;);</b>
+<b class="nc"><i>99</i>&nbsp;                String genre = resultSet.getString(&quot;GENRE&quot;);</b>
+<b class="nc"><i>100</i>&nbsp;                int year = resultSet.getInt(&quot;PUBLISH_YEAR&quot;);</b>
+<b class="nc"><i>101</i>&nbsp;                int num = resultSet.getInt(&quot;NUMBER&quot;);</b>
+<b class="nc"><i>102</i>&nbsp;                Date dateGive = resultSet.getDate(&quot;DATE_GIVE&quot;);</b>
+<b class="nc"><i>103</i>&nbsp;                Date dateReturn = resultSet.getDate(&quot;DATE_RETURN&quot;);</b>
+<i>104</i>&nbsp;
+<b class="nc"><i>105</i>&nbsp;                book = new Book(id, title, author, genre, year, num);</b>
+<b class="nc"><i>106</i>&nbsp;                giving = new Giving(id, idReader, dateGive, dateReturn);</b>
+<b class="nc"><i>107</i>&nbsp;                giveBooks.put(giving, book);</b>
+<b class="nc"><i>108</i>&nbsp;            }</b>
+<i>109</i>&nbsp;
+<b class="nc"><i>110</i>&nbsp;            giveMap.put(idReader, giveBooks);</b>
+<b class="nc"><i>111</i>&nbsp;        } catch (SQLException e) {</b>
+<b class="nc"><i>112</i>&nbsp;            logger.error(&quot;Return List Read Book Error &quot; + e.getMessage());</b>
+<b class="nc"><i>113</i>&nbsp;        }</b>
+<i>114</i>&nbsp;
+<b class="nc"><i>115</i>&nbsp;        return giveMap;</b>
+<i>116</i>&nbsp;    }
+<i>117</i>&nbsp;
+<i>118</i>&nbsp;    @Override
+<i>119</i>&nbsp;    public Map&lt;Long, Map&lt;Giving, Book&gt;&gt; allGivingList(long idReader){
+<b class="nc"><i>120</i>&nbsp;        Map&lt;Long, Map&lt;Giving, Book&gt;&gt; giveMap = new HashMap&lt;&gt;();</b>
+<b class="nc"><i>121</i>&nbsp;        HashMap&lt;Giving, Book&gt; giveBooks = new HashMap&lt;&gt;();</b>
+<b class="nc"><i>122</i>&nbsp;        Giving giving = null;</b>
+<b class="nc"><i>123</i>&nbsp;        Book book = null;</b>
+<b class="nc"><i>124</i>&nbsp;        String sqlBook = &quot;SELECT * FROM BOOK A JOIN GIVING B on A.ID = B.ID_BOOK WHERE ID_READER = ?; &quot;;</b>
+<i>125</i>&nbsp;
+<b class="nc"><i>126</i>&nbsp;        PreparedStatement statementReader = null;</b>
+<i>127</i>&nbsp;        try {
+<b class="nc"><i>128</i>&nbsp;            statementReader = connection.prepareStatement(sqlBook);</b>
+<b class="nc"><i>129</i>&nbsp;            statementReader.setLong(1, idReader);</b>
+<b class="nc"><i>130</i>&nbsp;            ResultSet resultSet = statementReader.executeQuery();</b>
+<b class="nc"><i>131</i>&nbsp;            while (resultSet.next()) {</b>
+<b class="nc"><i>132</i>&nbsp;                long idGive = resultSet.getLong(&quot;ID_GIVE&quot;);</b>
+<b class="nc"><i>133</i>&nbsp;                long idBook = resultSet.getLong(&quot;ID&quot;);</b>
+<b class="nc"><i>134</i>&nbsp;                String title = resultSet.getString(&quot;TITLE&quot;);</b>
+<b class="nc"><i>135</i>&nbsp;                String author = resultSet.getString(&quot;NAME_AUTHOR&quot;);</b>
+<b class="nc"><i>136</i>&nbsp;                String genre = resultSet.getString(&quot;GENRE&quot;);</b>
+<b class="nc"><i>137</i>&nbsp;                int year = resultSet.getInt(&quot;PUBLISH_YEAR&quot;);</b>
+<b class="nc"><i>138</i>&nbsp;                int num = resultSet.getInt(&quot;NUMBER&quot;);</b>
+<b class="nc"><i>139</i>&nbsp;                Date dateGive = resultSet.getDate(&quot;DATE_GIVE&quot;);</b>
+<b class="nc"><i>140</i>&nbsp;                Date dateReturn = resultSet.getDate(&quot;DATE_RETURN&quot;);</b>
+<i>141</i>&nbsp;
+<b class="nc"><i>142</i>&nbsp;                book = new Book(idBook, title, author, genre, year, num);</b>
+<b class="nc"><i>143</i>&nbsp;                giving = new Giving(idGive, idBook, idReader, dateGive, dateReturn);</b>
+<b class="nc"><i>144</i>&nbsp;                giveBooks.put(giving, book);</b>
+<b class="nc"><i>145</i>&nbsp;            }</b>
+<i>146</i>&nbsp;
+<b class="nc"><i>147</i>&nbsp;            giveMap.put(idReader, giveBooks);</b>
+<b class="nc"><i>148</i>&nbsp;        } catch (SQLException e) {</b>
+<b class="nc"><i>149</i>&nbsp;            logger.error(&quot;All Giving List Error &quot; + e.getMessage());</b>
+<b class="nc"><i>150</i>&nbsp;        }</b>
+<i>151</i>&nbsp;
+<b class="nc"><i>152</i>&nbsp;        return giveMap;</b>
+<i>153</i>&nbsp;    }
+<i>154</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-15 14:13</div>
+</div>
+</body>
+</html>

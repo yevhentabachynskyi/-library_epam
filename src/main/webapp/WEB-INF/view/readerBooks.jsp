@@ -19,7 +19,7 @@
         </tr>
         <c:forEach var="map" items="${giveMap}">
             <tr>
-                <td><c:out value="${(map.value).id}"/></td>
+                <td><c:out value="${(map.key).idGive}"/></td>
                 <td><c:out value="${(map.value).title}"/></td>
                 <td><c:out value="${(map.key).dateGive}"/></td>
                 <td><c:out value="${(map.key).dateReturn}"/></td>

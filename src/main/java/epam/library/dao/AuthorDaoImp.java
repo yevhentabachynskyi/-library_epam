@@ -1,6 +1,6 @@
 package epam.library.dao;
 
-import epam.library.db.Database;
+import epam.library.db.DatabaseConnection;
 import epam.library.model.Author;
 import epam.library.model.Book;
 import org.apache.log4j.LogManager;
@@ -11,11 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AuthorDaoImp implements AuthorDao {
-    private Connection connection = Database.getConnection();
+    private Connection connection = DatabaseConnection.getConnection();
     final static Logger logger = LogManager.getLogger(AuthorDaoImp.class);
 
     @Override
-    public Author findAuthorByName(String name)  {
+    public Author findAuthorByName(String name) {
         Author author = null;
         String sql = "SELECT * FROM AUTHOR WHERE name like ?";
 
@@ -30,7 +30,6 @@ public class AuthorDaoImp implements AuthorDao {
                 int id = resultSet.getInt("ID");
                 String nameAuthor = resultSet.getString("NAME");
                 author = new Author(id, nameAuthor);
-                System.out.println(author.getName());
             }
         } catch (SQLException e) {
             logger.error("Find Author Dao Error " + e.getMessage());
@@ -63,7 +62,7 @@ public class AuthorDaoImp implements AuthorDao {
     }
 
     @Override
-    public List<Book> listAllBooksByAuthor(String name){
+    public List<Book> listAllBooksByAuthor(String name) {
         List<Book> listBook = new ArrayList<>();
 
         String sql = "SELECT * FROM BOOK WHERE NAME_AUTHOR = ?";
@@ -84,8 +83,6 @@ public class AuthorDaoImp implements AuthorDao {
 
                 Book book = new Book(id, title, author, genre, year, num);
                 listBook.add(book);
-                System.out.println(title + " - " + author);
-
             }
         } catch (SQLException e) {
             logger.error("List Book By Author Dao Error " + e.getMessage());

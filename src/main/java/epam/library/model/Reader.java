@@ -6,7 +6,7 @@ public class Reader {
     private long id;
     private String name;
     private String address;
-    private int phone;
+    private String phone;
     private List<Book> bookList;
 
 
@@ -15,20 +15,20 @@ public class Reader {
     public Reader(long id) {
         this.id = id;
     }
-    public Reader(long id, String name, String address, int phone) {
+    public Reader(long id, String name, String address, String phone) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.phone = phone;
     }
 
-    public Reader(String name, String address, int phone) {
+    public Reader(String name, String address, String phone) {
         this.name = name;
         this.address = address;
         this.phone = phone;
     }
 
-    public Reader(long id, String name, String address, int phone, List<Book> bookList) {
+    public Reader(long id, String name, String address, String phone, List<Book> bookList) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -60,11 +60,11 @@ public class Reader {
         this.address = address;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

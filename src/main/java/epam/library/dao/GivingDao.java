@@ -1,5 +1,6 @@
 package epam.library.dao;
 
+import epam.library.exception.BooksOverException;
 import epam.library.model.Book;
 import epam.library.model.Giving;
 import epam.library.model.Reader;
@@ -11,7 +12,7 @@ import java.util.List;
 
 
 public interface GivingDao {
-    boolean giveBook (Giving giving);
+    boolean giveBook (Giving giving) throws BooksOverException;
     boolean returnBook(Long idBook);
     Map<Long, Map<Giving,Book>> returnList(long idReader);
     Map<Long, Map<Giving,Book>> allGivingList(long idReader);

@@ -1,19 +1,21 @@
 package epam.library.dao;
 
-import epam.library.db.Database;
+import epam.library.db.DatabaseConnection;
 import epam.library.model.Author;
 import epam.library.model.Book;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BookDaoImp implements BookDao {
-    private Connection connection = Database.getConnection();
+    private Connection connection = DatabaseConnection.getConnection();
     final static Logger logger = LogManager.getLogger(BookDaoImp.class);
+
 
     @Override
     public boolean addBook(Book book, Author author) {
@@ -28,6 +30,7 @@ public class BookDaoImp implements BookDao {
                 rowInserted = statementA.executeUpdate() > 0;
             } catch (JdbcSQLIntegrityConstraintViolationException e) {
                 rowInserted = true;
+                logger.error(e.getMessage());
             }
 
             String sqlBook = "INSERT INTO BOOK (TITLE, NAME_AUTHOR, GENRE, PUBLISH_YEAR, NUMBER) VALUES(?,?,?,?,?)";
@@ -71,7 +74,7 @@ public class BookDaoImp implements BookDao {
     }
 
     @Override
-    public Book editBook(long id){
+    public Book editBook(long id) {
         Book book = null;
         String sql = "SELECT * FROM BOOK WHERE BOOK.ID = ?";
 
@@ -96,7 +99,7 @@ public class BookDaoImp implements BookDao {
     }
 
     @Override
-    public boolean deleteBook(Book book){
+    public boolean deleteBook(Book book) {
         String sql = "DELETE FROM BOOK where ID = ?";
         boolean rowDeleted = false;
         PreparedStatement statement = null;
@@ -112,7 +115,7 @@ public class BookDaoImp implements BookDao {
     }
 
     @Override
-    public Book findBookByName(String name){
+    public Book findBookByName(String name) {
         Book book = null;
         String sql = "SELECT * FROM BOOK WHERE TITLE LIKE ?";
 

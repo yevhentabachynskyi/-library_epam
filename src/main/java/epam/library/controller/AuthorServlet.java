@@ -22,8 +22,7 @@ public class AuthorServlet extends HttpServlet {
     private AuthorDao authorDao = new AuthorDaoImp();
     final static Logger logger = LogManager.getLogger(AuthorServlet.class);
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         doGet(request, response);
     }
 
@@ -58,7 +57,6 @@ public class AuthorServlet extends HttpServlet {
             request.setAttribute("listAuthors", listAuthors);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/author.jsp");
             dispatcher.forward(request, response);
-            logger.info("Find author: " + findAuthor.getName());
         } catch (ServletException | IOException e) {
             logger.error("Find Author Error " + e.getMessage());
         }

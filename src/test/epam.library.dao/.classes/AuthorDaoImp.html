@@ -1,0 +1,189 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: AuthorDaoImp</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">epam.library.dao</a> ]
+</div>
+
+<h1>Coverage Summary for Class: AuthorDaoImp (epam.library.dao)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AuthorDaoImp</td>
+<td class="coverageStat">
+  <span class="percent">
+    20%
+  </span>
+  <span class="absValue">
+    (1/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    1,9%
+  </span>
+  <span class="absValue">
+    (1/ 54)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">AuthorDaoImp$$EnhancerByMockitoWithCGLIB$$3a98ee21</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    20%
+  </span>
+  <span class="absValue">
+    (1/ 5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    1,9%
+  </span>
+  <span class="absValue">
+    (1/ 54)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package epam.library.dao;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import epam.library.db.Database;
+<i>4</i>&nbsp;import epam.library.model.Author;
+<i>5</i>&nbsp;import epam.library.model.Book;
+<i>6</i>&nbsp;import org.apache.log4j.LogManager;
+<i>7</i>&nbsp;import org.apache.log4j.Logger;
+<i>8</i>&nbsp;
+<i>9</i>&nbsp;import java.sql.*;
+<i>10</i>&nbsp;import java.util.ArrayList;
+<i>11</i>&nbsp;import java.util.List;
+<i>12</i>&nbsp;
+<b class="nc"><i>13</i>&nbsp;public class AuthorDaoImp implements AuthorDao {</b>
+<b class="nc"><i>14</i>&nbsp;    private Connection connection = Database.getConnection();</b>
+<b class="fc"><i>15</i>&nbsp;    final static Logger logger = LogManager.getLogger(AuthorDaoImp.class);</b>
+<i>16</i>&nbsp;
+<i>17</i>&nbsp;    @Override
+<i>18</i>&nbsp;    public Author findAuthorByName(String name)  {
+<b class="nc"><i>19</i>&nbsp;        Author author = null;</b>
+<b class="nc"><i>20</i>&nbsp;        String sql = &quot;SELECT * FROM AUTHOR WHERE name like ?&quot;;</b>
+<i>21</i>&nbsp;
+<b class="nc"><i>22</i>&nbsp;        PreparedStatement statement = null;</b>
+<b class="nc"><i>23</i>&nbsp;        ResultSet resultSet = null;</b>
+<i>24</i>&nbsp;        try {
+<b class="nc"><i>25</i>&nbsp;            statement = connection.prepareStatement(sql);</b>
+<b class="nc"><i>26</i>&nbsp;            statement.setString(1, &quot;%&quot; + name + &quot;%&quot;);</b>
+<b class="nc"><i>27</i>&nbsp;            resultSet = statement.executeQuery();</b>
+<i>28</i>&nbsp;
+<b class="nc"><i>29</i>&nbsp;            if (resultSet.next()) {</b>
+<b class="nc"><i>30</i>&nbsp;                int id = resultSet.getInt(&quot;ID&quot;);</b>
+<b class="nc"><i>31</i>&nbsp;                String nameAuthor = resultSet.getString(&quot;NAME&quot;);</b>
+<b class="nc"><i>32</i>&nbsp;                author = new Author(id, nameAuthor);</b>
+<b class="nc"><i>33</i>&nbsp;                System.out.println(author.getName());</b>
+<i>34</i>&nbsp;            }
+<b class="nc"><i>35</i>&nbsp;        } catch (SQLException e) {</b>
+<b class="nc"><i>36</i>&nbsp;            logger.error(&quot;Find Author Dao Error &quot; + e.getMessage());</b>
+<b class="nc"><i>37</i>&nbsp;        }</b>
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;
+<b class="nc"><i>40</i>&nbsp;        return author;</b>
+<i>41</i>&nbsp;    }
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    @Override
+<i>44</i>&nbsp;    public List&lt;Author&gt; listAllAuthors() {
+<b class="nc"><i>45</i>&nbsp;        List&lt;Author&gt; listAuthors = new ArrayList&lt;&gt;();</b>
+<i>46</i>&nbsp;
+<b class="nc"><i>47</i>&nbsp;        String sql = &quot;SELECT * FROM AUTHOR&quot;;</b>
+<i>48</i>&nbsp;
+<b class="nc"><i>49</i>&nbsp;        try (Statement statement = connection.createStatement();</b>
+<b class="nc"><i>50</i>&nbsp;             ResultSet resultSet = statement.executeQuery(sql)) {</b>
+<b class="nc"><i>51</i>&nbsp;            while (resultSet.next()) {</b>
+<b class="nc"><i>52</i>&nbsp;                long id = resultSet.getLong(&quot;ID&quot;);</b>
+<b class="nc"><i>53</i>&nbsp;                String name = resultSet.getString(&quot;NAME&quot;);</b>
+<b class="nc"><i>54</i>&nbsp;                Author author = new Author(id, name, listAllBooksByAuthor(name));</b>
+<b class="nc"><i>55</i>&nbsp;                listAuthors.add(author);</b>
+<b class="nc"><i>56</i>&nbsp;            }</b>
+<b class="nc"><i>57</i>&nbsp;        } catch (SQLException e) {</b>
+<b class="nc"><i>58</i>&nbsp;            logger.error(&quot;List All Author Dao Error &quot; + e.getMessage());</b>
+<b class="nc"><i>59</i>&nbsp;        }</b>
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;
+<b class="nc"><i>62</i>&nbsp;        return listAuthors;</b>
+<i>63</i>&nbsp;    }
+<i>64</i>&nbsp;
+<i>65</i>&nbsp;    @Override
+<i>66</i>&nbsp;    public List&lt;Book&gt; listAllBooksByAuthor(String name){
+<b class="nc"><i>67</i>&nbsp;        List&lt;Book&gt; listBook = new ArrayList&lt;&gt;();</b>
+<i>68</i>&nbsp;
+<b class="nc"><i>69</i>&nbsp;        String sql = &quot;SELECT * FROM BOOK WHERE NAME_AUTHOR = ?&quot;;</b>
+<i>70</i>&nbsp;
+<b class="nc"><i>71</i>&nbsp;        PreparedStatement statement = null;</b>
+<i>72</i>&nbsp;        try {
+<b class="nc"><i>73</i>&nbsp;            statement = connection.prepareStatement(sql);</b>
+<b class="nc"><i>74</i>&nbsp;            statement.setString(1, name);</b>
+<b class="nc"><i>75</i>&nbsp;            ResultSet resultSet = statement.executeQuery();</b>
+<i>76</i>&nbsp;
+<b class="nc"><i>77</i>&nbsp;            while (resultSet.next()) {</b>
+<b class="nc"><i>78</i>&nbsp;                long id = resultSet.getLong(&quot;ID&quot;);</b>
+<b class="nc"><i>79</i>&nbsp;                String title = resultSet.getString(&quot;TITLE&quot;);</b>
+<b class="nc"><i>80</i>&nbsp;                String author = resultSet.getString(&quot;NAME_AUTHOR&quot;);</b>
+<b class="nc"><i>81</i>&nbsp;                String genre = resultSet.getString(&quot;GENRE&quot;);</b>
+<b class="nc"><i>82</i>&nbsp;                int year = resultSet.getInt(&quot;PUBLISH_YEAR&quot;);</b>
+<b class="nc"><i>83</i>&nbsp;                int num = resultSet.getInt(&quot;NUMBER&quot;);</b>
+<i>84</i>&nbsp;
+<b class="nc"><i>85</i>&nbsp;                Book book = new Book(id, title, author, genre, year, num);</b>
+<b class="nc"><i>86</i>&nbsp;                listBook.add(book);</b>
+<b class="nc"><i>87</i>&nbsp;                System.out.println(title + &quot; - &quot; + author);</b>
+<i>88</i>&nbsp;
+<b class="nc"><i>89</i>&nbsp;            }</b>
+<b class="nc"><i>90</i>&nbsp;        } catch (SQLException e) {</b>
+<b class="nc"><i>91</i>&nbsp;            logger.error(&quot;List Book By Author Dao Error &quot; + e.getMessage());</b>
+<b class="nc"><i>92</i>&nbsp;        }</b>
+<i>93</i>&nbsp;
+<b class="nc"><i>94</i>&nbsp;        return listBook;</b>
+<i>95</i>&nbsp;    }
+<i>96</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-06-15 14:13</div>
+</div>
+</body>
+</html>

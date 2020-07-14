@@ -1,6 +1,6 @@
 package epam.library.dao;
 
-import epam.library.db.Database;
+import epam.library.db.DatabaseConnection;
 import epam.library.model.Reader;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReaderDaoImp implements ReaderDao {
-    private Connection connection = Database.getConnection();
+    private Connection connection = DatabaseConnection.getConnection();
     final static Logger logger = LogManager.getLogger(ReaderDaoImp.class);
 
     @Override
@@ -22,7 +22,7 @@ public class ReaderDaoImp implements ReaderDao {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, reader.getName());
             preparedStatement.setString(2, reader.getAddress());
-            preparedStatement.setInt(3, reader.getPhone());
+            preparedStatement.setString(3, reader.getPhone());
             rowInserted = preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             logger.error("Add Reader Dao Error " + e.getMessage());
@@ -41,7 +41,7 @@ public class ReaderDaoImp implements ReaderDao {
             statement = connection.prepareStatement(sql);
             statement.setString(1, reader.getName());
             statement.setString(2, reader.getAddress());
-            statement.setInt(3, reader.getPhone());
+            statement.setString(3, reader.getPhone());
             statement.setLong(4, reader.getId());
             rowUpdated = statement.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -64,7 +64,7 @@ public class ReaderDaoImp implements ReaderDao {
             while (resultSet.next()) {
                 String name = resultSet.getString("NAME");
                 String address = resultSet.getString("ADDRESS");
-                int phone = resultSet.getInt("PHONE");
+                String phone = resultSet.getString("PHONE");
 
                 reader = new Reader(id, name, address, phone);
             }
@@ -108,7 +108,7 @@ public class ReaderDaoImp implements ReaderDao {
                 int id = resultSet.getInt("ID");
                 String nameReader = resultSet.getString("NAME");
                 String address = resultSet.getString("ADDRESS");
-                int phone = resultSet.getInt("PHONE");
+                String phone = resultSet.getString("PHONE");
                 reader = new Reader(id, nameReader, address, phone);
             }
         } catch (SQLException e) {
@@ -130,7 +130,7 @@ public class ReaderDaoImp implements ReaderDao {
                 long id = resultSet.getLong("ID");
                 String name = resultSet.getString("NAME");
                 String address = resultSet.getString("ADDRESS");
-                int phone = resultSet.getInt("PHONE");
+                String phone = resultSet.getString("PHONE");
 
                 Reader reader = new Reader(id, name, address, phone);
                 listReader.add(reader);

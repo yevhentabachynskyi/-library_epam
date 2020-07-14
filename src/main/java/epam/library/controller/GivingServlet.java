@@ -4,6 +4,8 @@ import epam.library.dao.BookDao;
 import epam.library.dao.BookDaoImp;
 import epam.library.dao.GivingDao;
 import epam.library.dao.GivingDaoImp;
+import epam.library.exception.AlreadyHasBookException;
+import epam.library.exception.BooksOverException;
 import epam.library.model.Book;
 import epam.library.model.Giving;
 import org.apache.log4j.LogManager;
@@ -16,9 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @WebServlet(urlPatterns = {"/reader/give", "/reader/return", "/reader/give/findBook", "/reader/give/givingBook", "/reader/return/returnBook", "/reader/allListBook"})
 public class GivingServlet extends HttpServlet {
@@ -28,13 +28,11 @@ public class GivingServlet extends HttpServlet {
 
     private long idReader;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) {
         doGet(request, response);
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) {
         String action = request.getServletPath();
 
         response.setContentType("text/html");
@@ -68,12 +66,12 @@ public class GivingServlet extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/give.jsp");
         try {
             dispatcher.forward(request, response);
-        }catch (ServletException | IOException e) {
+        } catch (ServletException | IOException e) {
             logger.error("Give List Book Error " + e.getMessage());
         }
     }
 
-    private void returnListBook(HttpServletRequest request, HttpServletResponse response){
+    private void returnListBook(HttpServletRequest request, HttpServletResponse response) {
         idReader = Long.parseLong(request.getParameter("idReader"));
         System.out.println(idReader + " return servlet");
         Map<Long, Map<Giving, Book>> giveMap = givingDao.returnList(idReader);
@@ -88,7 +86,7 @@ public class GivingServlet extends HttpServlet {
         }
     }
 
-    private void allListBook(HttpServletRequest request, HttpServletResponse response){
+    private void allListBook(HttpServletRequest request, HttpServletResponse response) {
         idReader = Long.parseLong(request.getParameter("idReader"));
         System.out.println(idReader + " return servlet");
         Map<Long, Map<Giving, Book>> giveMap = givingDao.allGivingList(idReader);
@@ -105,14 +103,42 @@ public class GivingServlet extends HttpServlet {
 
 
     private void giveBook(HttpServletRequest request, HttpServletResponse response) {
+        Map<Long, Map<Giving, Book>> giveMap = new HashMap<>();
+        Map<Giving, Book> giveBooks = new HashMap<>();
+        String messageOver = "The books are over";
+        String messageAlready = "The reader already has this book";
         long idBook = Long.parseLong(request.getParameter("idBook"));
-        System.out.println(idBook);
         Giving newGiving = new Giving(idBook, idReader);
-        givingDao.giveBook(newGiving);
-        System.out.println("GIVE");
+        giveMap.putAll(givingDao.returnList(idReader));
+        giveBooks.putAll(giveMap.get(idReader));
+        try {
+            if (!giveBooks.isEmpty()) {
+                for (Map.Entry<Giving, Book> entry : giveBooks.entrySet()) {
+                    if (entry.getKey().getIdBook() == newGiving.getIdBook()) {
+                        throw new AlreadyHasBookException();
+                    }
+                }
+            }
+            givingDao.giveBook(newGiving);
+        } catch (AlreadyHasBookException e) {
+            request.setAttribute("messageAlready", messageAlready);
+            try {
+                request.getRequestDispatcher("/WEB-INF/view/give.jsp").forward(request, response);
+            } catch (ServletException | IOException ex) {
+                logger.error(ex.getMessage());
+            }
+            logger.error(e.toString());
+        } catch (BooksOverException e) {
+            request.setAttribute("messageOver", messageOver);
+            try {
+                request.getRequestDispatcher("/WEB-INF/view/give.jsp").forward(request, response);
+            } catch (ServletException | IOException ex) {
+                logger.error(ex.getMessage());
+            }
+            logger.error(e.toString());
+        }
         try {
             response.sendRedirect("list");
-            logger.info("Giving book: " + new Book(idBook).getTitle());
         } catch (IOException e) {
             logger.error("Give Book Error " + e.getMessage());
         }
@@ -121,10 +147,8 @@ public class GivingServlet extends HttpServlet {
     private void returnBook(HttpServletRequest request, HttpServletResponse response) {
         long idBook = Long.parseLong(request.getParameter("idBook"));
         givingDao.returnBook(idBook);
-        System.out.println("RETURN");
         try {
             response.sendRedirect("list");
-            logger.info("Return book: " + new Book(idBook).getTitle());
         } catch (IOException e) {
             logger.error("Return Book Error " + e.getMessage());
         }

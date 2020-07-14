@@ -53,25 +53,17 @@
                 </tr>
                 <th>Genre:</th>
                 <td>
-                    <%--                    <input type="text" name="genre" size="45"--%>
-                    <%--                           value="<c:out value='${book.genre}' />"--%>
-                    <%--                    />--%>
-                    <%--                <input type="checkbox" name="genre" value="${book.genre}">--%>
-                    <%--                <label>--%>
-                    <%--                    <input type="checkbox"/> ${book.genre}--%>
-                    <%--                </label>--%>
-                        <input type="checkbox" name="genre" value="NOVEL"/>NOVEL
-                        <input type="checkbox" name="genre" value="FANTASY"/>FANTASY
-                        <input type="checkbox" name="genre" value="HISTORY"/>HISTORY
-                        <input type="checkbox" name="genre" value="DRAMA"/>DRAMA
-                        <input type="checkbox" name="genre" value="LYRICS"/>LYRICS
-
+                    <input type="radio" checked name="genre" value="NOVEL"/>NOVEL
+                    <input type="radio" checked name="genre" value="FANTASY"/>FANTASY
+                    <input type="radio" checked name="genre" value="HISTORY"/>HISTORY
+                    <input type="radio" checked name="genre" value="DRAMA"/>DRAMA
+                    <input type="radio" checked name="genre" value="LYRICS"/>LYRICS
                 </td>
                 </tr>
                 <tr>
                     <th>Year:</th>
                     <td>
-                        <input type="number" name="publishYear" size="4"
+                        <input type="text" name="publishYear" required pattern="[0-9]{4}" maxlength="4" minleght="4"
                                value="<c:out value='${book.publishYear}' />"
                         />
                     </td>

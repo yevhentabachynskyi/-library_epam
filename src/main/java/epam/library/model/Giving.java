@@ -5,12 +5,19 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Giving {
-    private long id;
+    private long idGive;
     private long idBook;
     private long idReader;
     private Date dateGive;
     private Date dateReturn;
 
+    public Giving(long idGive, long idBook, long idReader, Date dateGive, Date dateReturn) {
+        this.idGive = idGive;
+        this.idBook = idBook;
+        this.idReader = idReader;
+        this.dateGive = dateGive;
+        this.dateReturn = dateReturn;
+    }
 
     public Giving(long idBook, long idReader, Date dateGive, Date dateReturn) {
         this.idBook = idBook;
@@ -24,12 +31,12 @@ public class Giving {
         this.idReader = idReader;
     }
 
-    public long getId() {
-        return id;
+    public long getIdGive() {
+        return idGive;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setIdGive(long idGive) {
+        this.idGive = idGive;
     }
 
     public long getIdBook() {

@@ -15,6 +15,10 @@ public class Author {
         this.name = name;
         this.bookList = bookList;
     }
+    public Author(String name, List<Book> bookList) {
+        this.name = name;
+        this.bookList = bookList;
+    }
 
     public Author(long id, String name) {
         this.id = id;

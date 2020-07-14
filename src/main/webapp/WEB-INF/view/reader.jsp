@@ -2,8 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
 <head>
+    <meta charset="utf-8">
     <title>LIBRARY</title>
-
 </head>
 <body>
 <h1>Reader Management</h1>
@@ -54,8 +54,8 @@
                 <tr>
                     <th>Phone:</th>
                     <td>
-                        <input type="number" name="phone" size="11"
-                               value="<c:out value='${reader.phone}' />"
+                        <input type="text" name="phone" size="13"  required pattern="^\+3\d{3}\d{8}$" maxlength="13" minleght="13"
+                               value="<c:out value='${reader.phone}' />" maxlength="12"
                         />
                     </td>
                 </tr>
