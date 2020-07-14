@@ -8,7 +8,6 @@
 <body>
 <h1>Authors list</h1>
 <h2>&nbsp;&nbsp;&nbsp;
-   <%-- <a href="/reader/list">List All Readers</a>--%>
     <br> <br>
 
     <h2>Find author</h2>

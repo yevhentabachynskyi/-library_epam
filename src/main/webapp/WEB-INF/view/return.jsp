@@ -15,7 +15,6 @@
             <th>ID</th>
             <th>Title</th>
             <th>Giving date</th>
-            <%--            <th>Return date</th>--%>
         </tr>
         <c:forEach var="map" items="${giveMap}">
             <tr>

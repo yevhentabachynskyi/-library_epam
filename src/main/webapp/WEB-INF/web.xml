@@ -6,24 +6,4 @@
 
     <display-name>Servlets Tutorial</display-name>
 
-<!--    <servlet>
-        <servlet-name>LibraryServlet</servlet-name>
-        <servlet-class>epam.library.controller.LibraryServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>LibraryServlet</servlet-name>
-        <url-pattern>/</url-pattern>
-    </servlet-mapping>
-    <servlet>
-        <servlet-name>ReaderServlet</servlet-name>
-        <servlet-class>epam.library.controller.ReaderServlet</servlet-class>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>ReaderServlet</servlet-name>
-        <url-pattern>/reader</url-pattern>
-    </servlet-mapping>-->
-
-
 </web-app>
